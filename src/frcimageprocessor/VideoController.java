@@ -88,15 +88,15 @@ public class VideoController
 	private Image grabFrame()
 	{
 		Image imageToShow = null;
-		//Mat frame = new Mat();
-		Mat frame = new Mat(frame1.getHeight(), frame1.getWidth(), CvType.CV_8UC3);
-		byte[] pixels = ((DataBufferByte)frame1.getRaster().getDataBuffer()).getData();
-		frame.put(0, 0, pixels);
+		Mat frame = new Mat();
+		//Mat frame = new Mat(frame1.getHeight(), frame1.getWidth(), CvType.CV_8UC3);
+		//byte[] pixels = ((DataBufferByte)frame1.getRaster().getDataBuffer()).getData();
+		//frame.put(0, 0, pixels);
 		if (this.capture.isOpened())
 		{
 			try
 			{
-				//this.capture.read(frame);
+				this.capture.read(frame);
 				if (!frame.empty())
 				{
 					if (grayscale.isSelected())
@@ -106,7 +106,7 @@ public class VideoController
 					
 					if (track.isSelected())
 					{
-						Scalar hsv_min = new Scalar(13, 50, 50, 0);  
+						Scalar hsv_min = new Scalar(0, 50, 50, 0);  
 					    Scalar hsv_max = new Scalar(6, 255, 255, 0);    
 						Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2HSV);
 						Core.inRange(frame, hsv_min, hsv_max, frame);
